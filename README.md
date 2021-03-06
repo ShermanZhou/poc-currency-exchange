@@ -13,7 +13,8 @@ Visit [https://www.frankfurter.app/docs/](https://www.frankfurter.app/docs/) for
 - specified version 1.0.0 in compose file, latest doesn't work.
 
 ### app screenshot
-![screenshot](screenshot-001.png)
+
+![rootfolder/screenshot-001.png](screenshot-001.png)
 ## Available Scripts
 
 In the project directory, you can run:

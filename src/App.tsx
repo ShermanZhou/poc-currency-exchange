@@ -10,7 +10,7 @@ import { Table } from 'react-bootstrap';
 import { ButtonGroup, ToggleButton, Button} from 'react-bootstrap';
 
 function App() {
-  const fetchDays = 10;
+  const fetchDays = 30;
   const dispatch = useDispatch();
 
   const startDate = getStartDate(fetchDays);
@@ -26,7 +26,7 @@ function App() {
   const exState = useSelector((state: AppRootState) => state.exchangeRate);
   const isLoaded = !exState.loading && exState.data;
   let rateArray = isLoaded ? extractRateArray( exState.data! , CURRENCIES.CAD) : [];
-  rateArray = rateArray.slice(0, 10);
+  rateArray = rateArray.slice(0, fetchDays);
   const median = isLoaded ? getMedian(rateArray) : 0;
   const flag = isLoaded ? getBuySellFlag(rateArray, median) : 0;
 
