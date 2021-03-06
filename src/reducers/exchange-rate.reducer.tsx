@@ -1,12 +1,7 @@
 import { produce } from 'immer';
 import { ExchangeActionTypes, FetchAction, FetchSuccessAction, FetchFailureAction} from '../actions/exchange-rate.action';
 import { Action } from 'redux';
-import { TimeSerials } from '../api/types';
-interface ExchangeRateState {
-  loading: boolean;
-  error: any;
-  data: TimeSerials | null,
-}
+import { ExchangeRateState } from '../store/exchange-rate.store';
 
 const initialState: ExchangeRateState = {
   loading: false,
