@@ -2,7 +2,7 @@
 
 
 ### Front-end
-Built with react, redux, redux thunk, react-hooks native stack, with typescript.
+Built with react, redux, redux thunk, react-hooks technical stack, with typescript.
 
 ### Back-end
 frankfurter is a web-service that query currency exchange rates.
@@ -12,6 +12,8 @@ Visit [https://www.frankfurter.app/docs/](https://www.frankfurter.app/docs/) for
 - expose port 8080 for react proxy.
 - specified version 1.0.0 in compose file, latest doesn't work.
 
+### app screenshot
+![screenshot](screenshot-001.png)
 ## Available Scripts
 
 In the project directory, you can run:
