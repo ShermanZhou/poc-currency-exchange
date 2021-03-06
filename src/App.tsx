@@ -25,8 +25,10 @@ function App() {
 
   const exState = useSelector((state: AppRootState) => state.exchangeRate);
   const isLoaded = !exState.loading && exState.data;
-  const rateArray = isLoaded ? extractRateArray(exState.data!,CURRENCIES.CAD):[];
-  const flag = isLoaded ? getBuySellFlag(rateArray):0;
+  let rateArray = isLoaded ? extractRateArray( exState.data! , CURRENCIES.CAD) : [];
+  rateArray = rateArray.slice(0, 10);
+  const median = isLoaded ? getMedian(rateArray) : 0;
+  const flag = isLoaded ? getBuySellFlag(rateArray, median) : 0;
 
   return (
     <div className="App">
@@ -50,21 +52,26 @@ function App() {
               <td>{rateArray[rateArray.length-1]}</td>
               <td>{1}</td>
               <td>
-                {flag!==0 &&
+                {flag !==0 &&
                   <ButtonGroup toggle>
-                    <ToggleButton type="radio" name="radio" value={flag} checked={flag==1}>Buy</ToggleButton>
-                    <ToggleButton type="radio" name="radio" value={flag} checked={flag==-1}>Sell</ToggleButton>
+                    <ToggleButton type="radio" name="radio" value={flag} checked={flag===1}>Buy</ToggleButton>
+                    <ToggleButton type="radio" name="radio" value={flag} checked={flag===-1}>Sell</ToggleButton>
                   </ButtonGroup>
                 }
               </td>
               <td>
-                 <Button variant="primary">Submit</Button>
+                {flag !==0 &&
+                 <Button variant="primary">Submit</Button> }
+                {flag ===0 && <span>No suggested action</span> }
               </td>
             </tr>
           </tbody>
         </Table>
         <div>
           Historical exchange rates: { rateArray.join(', ')}
+        </div>
+        <div>
+          Threshold Price: {median}
         </div>
       </div>}
     </div>
@@ -73,16 +80,16 @@ function App() {
 
 function getStartDate(numOfDays: number): Date {
   const currentDate = new Date();
-  const offset = 1000 * 24 * 3600 * numOfDays;
+  // get data for extra day to assure 10 days in all time zone
+  const offset = 1000 * 24 * 3600 * (numOfDays + 1);
   const startDateTime = currentDate.getTime() - offset;
   const startDate = new Date(startDateTime);
   startDate.setHours(0, 0, 0, 0);
   return startDate;
 }
 
-function getBuySellFlag(rateData: number[]) {
+function getBuySellFlag(rateData: number[], median: number) {
   const latestValue = rateData[rateData.length - 1];
-  const median = getMedian(rateData);
   if (latestValue < median) {
     return 1;
   } else if (latestValue > median) {
