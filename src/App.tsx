@@ -10,14 +10,15 @@ import { useDispatch } from 'react-redux'
 function App() {
   const fetchDays = 10;
   const startDate = getStartDate(fetchDays);
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    const fetch = fetchExchangeRate({
+  useEffect(() => {
+    dispatch(fetchExchangeRate({
       date: startDate,
       from: CURRENCIES.USD,
       to: CURRENCIES.CAD
-    });
-    fetch(dispatch);
+    }))
+  }, []);
 
   return (
     <div className="App">

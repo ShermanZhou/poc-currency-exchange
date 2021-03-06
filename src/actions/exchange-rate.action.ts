@@ -29,7 +29,7 @@ const fetchExchangeRate = (data: FetchRateParam) => (dispatch: Dispatch) => {
         type: ExchangeActionTypes.Fetch,
         data: data
     });
-    return getExchangeRateHistory(data.date, data.from, data.to).then(res => res.json())
+    getExchangeRateHistory(data.date, data.from, data.to).then(res => res.json())
         .then(res => {
             dispatch({
                 type: ExchangeActionTypes.FetchSuccess,
